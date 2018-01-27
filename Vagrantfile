@@ -9,9 +9,9 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "server1" do |server1|
     server1.vm.hostname="server1"
-    server1.vm.network "private_network", ip: "192.168.0.10"
-    server1.vm.provision "shell", inline: <<-SHELL
-      echo '192.168.0.11 server2 server2' >> /etc/hosts
+    server1.vm.network "private_network", ip: "172.16.10.10"
+    erver1.vm.provision "shell", inline: <<-SHELL
+      echo '172.16.10.11 server2 server2' >> /etc/hosts
       yum install -y git
       git init 
       git clone https://github.com/AlexandrKowalev/DevOps_training.git -b task2 
@@ -21,9 +21,9 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "server2" do |server2|
     server2.vm.hostname="server2"
-    server2.vm.network "private_network", ip: "192.168.0.11"
+    server2.vm.network "private_network", ip: "172.16.10.11"
     server2.vm.provision "shell", inline: <<-SHELL
-      echo '192.168.0.10 server1 server1' >> /etc/hosts
+      echo '172.16.10.10 server1 server1' >> /etc/hosts
      SHELL
   end
 
