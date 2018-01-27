@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "server1" do |server1|
     server1.vm.hostname="server1"
     server1.vm.network "private_network", ip: "172.16.10.10"
-    erver1.vm.provision "shell", inline: <<-SHELL
+    server1.vm.provision "shell", inline: <<-SHELL
       echo '172.16.10.11 server2 server2' >> /etc/hosts
       yum install -y git
       git init 
