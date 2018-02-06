@@ -2,11 +2,14 @@ Vagrant.configure("2") do |config|
   config.vm.box = "bertvv/centos72"
   config.vm.provision "shell", inline: <<-SHELL
     yum install -y mc
+    systemctl stop firewalld
+    systemctl disable firewalld
   SHELL
   config.vm.provider "virtualbox" do |vb|
     vb.gui = true
     vb.memory = 1024
   end
+  
   config.vm.define "apache" do |apache|
     apache.vm.hostname="apache"
     apache.vm.network "private_network", ip: "192.168.0.10"
@@ -17,7 +20,6 @@ Vagrant.configure("2") do |config|
       systemctl stop firewalld
       yum install httpd -y
       systemctl enable httpd
-      systemctl start httpd
       cp /vagrant/mod_jk.so /etc/httpd/modules/
       echo -e "worker.list=lb
         worker.lb.type=lb
@@ -34,12 +36,11 @@ Vagrant.configure("2") do |config|
         JkLogFile logs/mod_jk.log
         JkLogLevel info
         JkMount /test* lb" >> /etc/httpd/conf/httpd.conf
-      systemctl restart httpd
-      systemctl stop firewalld
-      systemctl disable firewalld
+      systemctl start httpd
     SHELL
   end
-    config.vm.define "tomcat1" do |tomcat1|
+  
+  config.vm.define "tomcat1" do |tomcat1|
     tomcat1.vm.hostname = "tomcat1"
     tomcat1.vm.network "private_network", ip: "192.168.0.11"
     tomcat1.vm.provision "shell", inline:<<-SHELL
@@ -50,14 +51,12 @@ Vagrant.configure("2") do |config|
       mkdir /usr/share/tomcat/webapps/test
       touch /usr/share/tomcat/webapps/test/index.html
       echo -e "tomcat1" >> /usr/share/tomcat/webapps/test/index.html
-      systemctl stop firewalld
-      systemctl disable firewalld
       systemctl enable tomcat
       systemctl start tomcat
     SHELL
   end
 
-    config.vm.define "tomcat2" do |tomcat2|
+  config.vm.define "tomcat2" do |tomcat2|
     tomcat2.vm.hostname = "tomcat2"
     tomcat2.vm.network "private_network", ip: "192.168.0.12"
     tomcat2.vm.provision "shell", inline:<<-SHELL
@@ -68,8 +67,6 @@ Vagrant.configure("2") do |config|
       mkdir /usr/share/tomcat/webapps/test
       touch /usr/share/tomcat/webapps/test/index.html
       echo -e "tomcat2" >> /usr/share/tomcat/webapps/test/index.html
-      systemctl stop firewalld
-      systemctl disable firewalld
       systemctl enable tomcat
       systemctl start tomcat
     SHELL
