@@ -45,11 +45,11 @@ Vagrant.configure("2") do |config|
     tomcat1.vm.provision "shell", inline:<<-SHELL
       echo -e "192.168.0.10 apache apache
         192.168.0.12 tomcat2 tomcat2" >> /etc/hosts
-      touch /usr/share/tomcat/webapps/test/index.html
-      echo -e "tomcat1" >> /usr/share/tomcat/webapps/test/index.html
       yum install java-1.8.0-openjdk -y
       yum install tomcat tomcat-webapps tomcat-admin-webapps -y
       mkdir /usr/share/tomcat/webapps/test
+      touch /usr/share/tomcat/webapps/test/index.html
+      echo -e "tomcat1" >> /usr/share/tomcat/webapps/test/index.html
       systemctl stop firewalld
       systemctl disable firewalld
       systemctl enable tomcat
@@ -63,11 +63,11 @@ Vagrant.configure("2") do |config|
     tomcat2.vm.provision "shell", inline:<<-SHELL
       echo -e "192.168.0.10 apache apache
         192.168.0.11 tomcat1 tomcat1" >> /etc/hosts
-      touch /usr/share/tomcat/webapps/test/index.html
-      echo -e "tomcat2" >> /usr/share/tomcat/webapps/test/index.html
       yum install java-1.8.0-openjdk -y
       yum install tomcat tomcat-webapps tomcat-admin-webapps -y
       mkdir /usr/share/tomcat/webapps/test
+      touch /usr/share/tomcat/webapps/test/index.html
+      echo -e "tomcat2" >> /usr/share/tomcat/webapps/test/index.html
       systemctl stop firewalld
       systemctl disable firewalld
       systemctl enable tomcat
