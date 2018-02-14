@@ -1,41 +1,42 @@
 apply plugin: 'war'
 
 repositories {
-    mavenCentral()
-    }
+  mavenCentral()
+}
 war {
-    archiveName = 'module4.war'
+  archiveName = 'task4.war'
 }
 
 dependencies {
-    compile group: 'log4j', name: 'log4j', version: '1.2.17'
-    compile group: 'commons-io', name: 'commons-io', version: '2.4'
+  compile group: 'log4j', name: 'log4j', version: '1.2.17'
+  compile group: 'commons-io', name: 'commons-io', version: '2.4'
 }
 task versionRecord {
-doLast {
+  doLast {
     File fileGreeting = new File('build/resources/main/greeting.txt')
     if( fileGreeting.exists() ) {
-        def outFile = file(fileGreeting)
-        outFile.append(' '+version+'.'+buildVersion)
-        println 'version inserted'+' '+version+'.'+buildVersion
-    }else{
-        println 'File not found'
+      def outFile = file(fileGreeting)
+      outFile.append(' '+version+'.'+buildVersion)
+      println 'version inserted'+' '+version+'.'+buildVersion
     }
-}
+    else{
+      println 'File not found'
+    }
+  }
 }
 war {
   dependsOn versionRecord
 }
 
 task incrementVersion {
-doLast {
+  doLast {
     println buildVersion
     int Version = buildVersion.toInteger()+1
     println Version
     def newVersion = String.format( "%d", Version )
     ant.propertyfile(
-        file: "gradle.properties") {
-        entry( key: "buildVersion", value: newVersion)
+      file: "gradle.properties") {
+      entry( key: "buildVersion", value: newVersion)
     }
-}
+  }
 }
