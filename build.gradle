@@ -1,7 +1,9 @@
 apply plugin: 'war'
 
 repositories {
-  mavenCentral()
+  maven {
+    url: 'http://localhost:18081/nexus/content/groups/public/'
+  }
 }
 war {
   archiveName = 'task4.war'
