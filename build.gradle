@@ -1,8 +1,6 @@
 apply plugin: 'war'
 
-repositories {
-  maven{ url http://localhost:18081/nexus/content/repositories/snapshots/}
-}
+
 war {
   archiveName = 'task4.war'
 }
