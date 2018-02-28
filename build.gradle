@@ -1,5 +1,7 @@
 apply plugin: 'war'
-
+repositories {
+  mavenCentral()
+}
 
 war {
   archiveName = 'task4.war'
