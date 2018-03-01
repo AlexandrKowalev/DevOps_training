@@ -1,7 +1,7 @@
 apply plugin: 'war'
 
 repositories {
-  https://repo1.maven.org/maven2/
+  mavenCentral()
 }
 war {
   archiveName = 'task4.war'
