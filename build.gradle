@@ -4,7 +4,7 @@ repositories {
   mavenCentral()
 }
 war {
-  archiveName = 'task4.war'
+  archiveName = 'task6.war'
 }
 
 dependencies {
